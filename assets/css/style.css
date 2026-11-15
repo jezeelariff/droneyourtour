@@ -175,3 +175,29 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: #E5484
   html { scroll-behavior: auto; }
   * { animation: none !important; transition: none !important; }
 }
+
+@media (max-width: 768px) {
+  .pkg {
+    display: flex;
+    flex-direction: column;
+  }
+  .pkg-body {
+    display: contents;
+  }
+  .pkg-head {
+    order: 1;
+  }
+  .pkg-sub,
+  .pkg-body > p:not(.price),
+  .pkg-body details {
+    order: 2;
+  }
+  .pkg-img {
+    order: 3;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .pkg-body > .price {
+    order: 4;
+  }
+}
