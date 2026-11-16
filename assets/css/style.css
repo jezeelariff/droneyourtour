@@ -188,17 +188,19 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: #E5484
     order: 1;
   }
   .pkg-sub,
-  .pkg-body > p:not(.price),
-  .pkg-body details {
+  .pkg-body > p:not(.price) {
     order: 2;
   }
   .pkg > img,
   .pkg > .pkg-img {
     order: 3;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .pkg-body details {
+    order: 4;
   }
   .pkg-body > .price {
-    order: 4;
+    order: 5;
   }
 }
