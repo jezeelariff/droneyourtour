@@ -120,3 +120,15 @@ if (form) {
     }
   });
 }
+
+// Select package automatically when clicking a package button
+document.querySelectorAll(".pkg-select").forEach(link => {
+  link.addEventListener("click", () => {
+    const pkgName = link.dataset.package;
+    const pkgSelect = document.querySelector('#contact-form select[name="package"]');
+    if (pkgSelect && pkgName) {
+      pkgSelect.value = pkgName;
+      pkgSelect.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  });
+});
