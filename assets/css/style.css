@@ -217,3 +217,96 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: #E5484
   .form-status.is-ok { color: #7fd1a0; }
   .form-status.is-err { color: #ff8a80; }
 }
+
+/* ------------------------------------------------------------
+   Floating quick-contact buttons (right edge, bow shape)
+   Stacking: above page content (hero, HUD), below the sticky
+   header (z-index 50), so the open mobile menu covers them.
+   ------------------------------------------------------------ */
+:root {
+  --fab-size: 50px;      /* circle diameter */
+  --fab-edge: 14px;      /* gap from screen edge, top & bottom buttons */
+  --fab-bow: 22px;       /* how much further left the middle button sits */
+  --fab-gap: 12px;       /* vertical space between circles */
+}
+.fab {
+  position: fixed;
+  top: 50%;
+  right: calc(var(--fab-edge) + env(safe-area-inset-right, 0px));
+  transform: translateY(-50%);
+  z-index: 40;
+}
+.fab ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; align-items: flex-end; gap: var(--fab-gap);
+}
+.fab-mid { margin-right: var(--fab-bow); }
+
+.fab-btn {
+  position: relative;
+  display: grid; place-items: center;
+  width: var(--fab-size); height: var(--fab-size);
+  border-radius: 50%;
+  background: var(--basalt);
+  color: var(--kite);
+  text-decoration: none;
+  box-shadow:
+    0 0 0 2px rgba(243, 246, 245, .22),
+    0 6px 16px rgba(10, 18, 20, .28),
+    0 1px 3px rgba(10, 18, 20, .25);
+  transition: transform .25s cubic-bezier(.3, 1.4, .5, 1), background-color .2s ease, color .2s ease, box-shadow .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.fab-btn svg { width: 46%; height: 46%; display: block; }
+.fab-btn:hover,
+.fab-btn:focus-visible {
+  transform: scale(1.1);
+  background: var(--kite);
+  color: var(--basalt);
+  box-shadow:
+    0 0 0 2px rgba(30, 43, 48, .35),
+    0 10px 22px rgba(10, 18, 20, .32),
+    0 2px 4px rgba(10, 18, 20, .25);
+}
+.fab-btn:active { transform: scale(.96); }
+.fab-btn:focus-visible { outline: 3px solid var(--kite); outline-offset: 4px; }
+
+/* Text label that slides out to the left */
+.fab-label {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translate(6px, -50%);
+  white-space: nowrap;
+  background: var(--basalt);
+  color: #F3F6F5;
+  font: 600 .85rem/1 var(--display);
+  letter-spacing: .01em;
+  padding: .5rem .75rem;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(10, 18, 20, .25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.fab-btn:focus-visible .fab-label { opacity: 1; transform: translate(0, -50%); }
+@media (hover: hover) and (pointer: fine) and (min-width: 901px) {
+  .fab-btn:hover .fab-label { opacity: 1; transform: translate(0, -50%); }
+}
+
+/* Keep page content clear of the buttons */
+@media (min-width: 901px) {
+  main .wrap, .site-footer .wrap { width: min(1160px, 100% - 11rem); }
+}
+@media (max-width: 900px) {
+  :root { --fab-size: 42px; --fab-edge: 8px; --fab-bow: 12px; --fab-gap: 10px; }
+  main .wrap, .site-footer .wrap { width: auto; margin-left: 1.25rem; margin-right: 4.25rem; }
+}
+@media (max-width: 560px) {
+  :root { --fab-size: 40px; --fab-edge: 6px; --fab-bow: 10px; --fab-gap: 8px; }
+  main .wrap, .site-footer .wrap { margin-right: 3.75rem; }
+}
+/* Very short screens (phones in landscape): tighten the stack */
+@media (max-height: 420px) {
+  :root { --fab-size: 36px; --fab-gap: 6px; --fab-bow: 8px; }
+}
